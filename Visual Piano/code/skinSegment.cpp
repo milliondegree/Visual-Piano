@@ -4,17 +4,17 @@ void skin_Segment3(Mat input,Mat output)
 {
 	IplImage input_img=input; 
 	IplImage* output_mask=NULL;  
-    IplImage* output_img=NULL;  
+    	IplImage* output_img=NULL;  
 	output_img=cvCreateImage(cvGetSize(&input_img),(&input_img)->depth,(&input_img)->nChannels);  
-    cvZero(output_img);  
+    	cvZero(output_img);  
 	if(output_mask==NULL)  
         {  
             output_mask=cvCreateImage(cvGetSize(&input_img),(&input_img)->depth,1);  
         }  
 	CvAdaptiveSkinDetector skin_detector(1,CvAdaptiveSkinDetector::MORPHING_METHOD_ERODE_DILATE);   
-    skin_detector.process(&input_img,output_mask);   
+   	 skin_detector.process(&input_img,output_mask);   
 
-    cvCopy(&input_img,output_img,output_mask);  
+    	cvCopy(&input_img,output_img,output_mask);  
 
 	Mat out(output_img,0);
 	out.copyTo(output);
@@ -32,7 +32,7 @@ void skin_Segment2(Mat input,Mat output)
       
     result.create(input.rows, input.cols, CV_8UC1);  
   
-        /*±éÀúÍ¼Ïñ£¬½«·ûºÏãĞÖµ·¶Î§µÄÏñËØÉèÖÃÎª255£¬ÆäÓàÎª0*/  
+        /*éå†å›¾åƒï¼Œå°†ç¬¦åˆé˜ˆå€¼èŒƒå›´çš„åƒç´ è®¾ç½®ä¸º255ï¼Œå…¶ä½™ä¸º0*/  
     for (int j = 1; j < Y.rows - 1; j++)  
     {  
            uchar* currentCr = Cr.ptr< uchar>(j);  
@@ -64,10 +64,10 @@ void skin_Segment(Mat input,Mat output)
 	vector<Mat> channels;                      //devide Cr  
 	split(ycrcb,channels);
 
-	Mat dst=Mat::zeros(input.size(),CV_8UC1); //Ñ¡È¡Í¨µÀÒ»CrÖµ
+	Mat dst=Mat::zeros(input.size(),CV_8UC1); //é€‰å–é€šé“ä¸€Crå€¼
 	dst=channels.at(1); 
 	
-	IplImage img_cr=dst;                        //ãĞÖµ·Ö¸î	
+	IplImage img_cr=dst;                        //é˜ˆå€¼åˆ†å‰²	
 	cvThresholdOtsu(&img_cr,&img_cr);
 
 	Mat cr(&img_cr,0);
@@ -76,7 +76,7 @@ void skin_Segment(Mat input,Mat output)
 	cr.copyTo(output);
 	
 }
-void cvThresholdOtsu(IplImage* src,IplImage* dst)//otsu ×î´óÀà¼ä²î·Ö·¨£¬Ò»ÖÖ×ÔÊÊÓ¦ãĞÖµÈ·¶¨·½·¨
+void cvThresholdOtsu(IplImage* src,IplImage* dst)//otsu æœ€å¤§ç±»é—´å·®åˆ†æ³•ï¼Œä¸€ç§è‡ªé€‚åº”é˜ˆå€¼ç¡®å®šæ–¹æ³•
 {
     int height = src->height;
     int width = src->width;
